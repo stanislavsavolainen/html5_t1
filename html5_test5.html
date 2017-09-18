@@ -1,0 +1,95 @@
+<!DOCTYPE HTML>
+
+<style type="text/css">
+	   
+		#myCanvas {
+    		background-color: yellow;
+		}
+</style>	
+
+<script>
+	
+	var position_x = 5, position_y = 8;
+	var tile_width = 50, tile_height = 50;
+	var line_thick = 3;
+	
+	
+	window.addEventListener('keydown',this.check,false);
+
+function check(e) {
+    //alert(e.keyCode);
+	  var code = e.keyCode;
+    switch (code) {
+        case 37: position_x -= tile_width; break; //Left key
+        case 38: position_y -= tile_height; break; //Up key
+        case 39: position_x += tile_width; break; //Right key
+        case 40: position_y += tile_height; break; //Down key
+        default: alert(code); //Everything else
+    }
+}
+	
+	
+	function screen( x, y){
+	  var canvas = document.getElementById('myCanvas');
+      var context = canvas.getContext('2d');
+	
+		
+		
+		
+	  context.beginPath();
+      context.rect(position_x, position_y, tile_width, tile_height);
+      context.fillStyle = 'yellow';
+      context.fill();
+      context.lineWidth = line_thick;
+      context.strokeStyle = 'black';
+      context.stroke();
+	   	
+    context.save();
+    context.clearRect(0,0,550,400);
+    context.fillStyle = "rgba(0,200,0,1)";
+		
+		
+    context.fillRect (position_x, position_y, 50, 50);   // --------> draw graphics
+    //drawField(context);
+		
+	context.restore(); 
+    
+	drawField(context);	
+		
+		x += 1;
+    var loopTimer = setTimeout('screen('+x+','+y+')',30);
+			
+	}
+	
+	
+	function drawField(content){
+	  
+		var grid_x = 12, grid_y = 8, grid_width = tile_width, grid_height = tile_height;	
+	
+	  for( var j = 0; j < grid_y; j++ ){
+	  	for( var i = 0; i < grid_x; i++  ){
+			
+			content.beginPath();
+      		content.rect( i * grid_width , j * grid_height , grid_width, grid_height);
+     		// content.fillStyle = 'yellow';
+      		//content.fill();
+      		content.lineWidth = line_thick;
+      		content.strokeStyle = '#00ff00';
+      		content.stroke();
+			
+		}
+	  }	
+	
+	}
+	
+	
+	
+</script>
+
+<html>
+<title> html5 -> test 5 </title>
+<body onload="screen(0,0)">
+<h1> html5 -> test 5 </h1>
+<br /><canvas id="myCanvas" width="800" height="600" ></canvas>
+</body>
+</html>
