@@ -1,0 +1,33 @@
+
+
+
+<canvas id="myCanvas" width="200" height="100" style="background:green"></canvas>
+<script type="text/javascript">
+
+	
+// https://stackoverflow.com/questions/12241113/whats-the-best-way-to-create-key-events-in-html5-canvas	
+	
+window.addEventListener('keydown',this.check,false);
+
+function check(e) {
+    //alert(e.keyCode);
+	  var code = e.keyCode;
+    switch (code) {
+        case 37: alert("Left"); break; //Left key
+        case 38: alert("Up"); break; //Up key
+        case 39: alert("Right"); break; //Right key
+        case 40: alert("Down"); break; //Down key
+        default: alert(code); //Everything else
+    }
+}
+</script>
+
+
+<html>
+<title>
+key test
+</title>
+<body>
+<h1>keyboard keys test 1</h1>
+</body>
+</html>
