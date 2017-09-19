@@ -1,0 +1,155 @@
+<!DOCTYPE HTML>
+
+
+
+
+<style type="text/css">
+       
+        #myCanvas {
+            background-color: yellow;
+        }
+</style>    
+
+<script>
+    
+	var screen_width = 800, screen_height = 600;
+	
+    var player_position_x = 0, player_position_y = 0;
+    var tile_width = 50, tile_height = 50;
+    var line_thick = 3;
+	var grid_x = (screen_width / tile_width), grid_y = ( screen_height / tile_height );
+    
+	var score_position_x = 0, score_position_y = 0;
+	
+	var scores = 0;
+	
+ //=====================================================================	
+    
+    window.addEventListener('keydown',this.check,false);
+
+function check(e) {
+    //alert(e.keyCode);
+      var code = e.keyCode;
+    switch (code) {
+        case 37: if( player_position_x > 0) player_position_x -= 1; break; //Left key
+        case 38: if( player_position_y > 0) player_position_y -= 1; break; //Up key
+        case 39: if( player_position_x < (grid_x - 1) ) player_position_x += 1; break; //Right key
+        case 40: if( player_position_y < (grid_y - 1) ) player_position_y += 1; break; //Down key
+        default: alert(code); //Everything else
+    }
+}
+    //=====================================================================
+    
+    function screen() {
+		
+	  document.getElementById('score_field').innerHTML = scores;	
+		
+      var canvas = document.getElementById('myCanvas');
+      var context = canvas.getContext('2d');
+  
+		//render graphics
+		context.beginPath();
+		
+		 context.save();
+    	context.clearRect(0,0,screen_width,screen_height);
+   		 context.fillStyle = "rgba(0,200,0,1)";
+		
+		drawField(context);
+		drawPlayer(context);
+		drawScore(context);
+		context.fill();
+		
+		context.stroke();
+    
+		//check if player can get score
+		if(player_position_x == score_position_x && player_position_y == score_position_y ){
+			scores += 1;
+			generateNewScorePlace();
+		}
+		
+		
+        
+    var loopTimer = setTimeout('screen()',30);
+             
+    }
+	
+	//=====================================================================
+    
+    function drawField(content){
+		
+        var grid_width = tile_width, grid_height = tile_height;    
+		
+		 var img = document.getElementById("grass1");
+         
+		//content.drawImage(img,10,10,150,180);
+		
+      for( var j = 0; j < grid_y; j++ ){
+        for( var i = 0; i < grid_x; i++  ){
+            
+			 content.beginPath();
+			 content.drawImage(img, i * tile_width , j * tile_height , tile_width, tile_height);
+			 content.stroke(); 
+	         
+			/*
+            content.beginPath();
+            content.rect( i * tile_width , j * tile_height , tile_width, tile_height);
+            // content.fillStyle = 'yellow';
+            //content.fill();
+            content.lineWidth = line_thick;
+            content.strokeStyle = '#00ff00';
+            content.stroke();
+			*/
+        }
+      } 
+    }
+    
+	//=====================================================================
+	
+	function drawPlayer(content){
+		var img = document.getElementById("player1");
+		content.beginPath();
+		content.drawImage(img, player_position_x  * tile_width , player_position_y * tile_height , tile_width, tile_height);
+		//content.drawImage(img, 100, 100 , 200, 200);
+		content.stroke(); 
+	}
+	
+	//=====================================================================
+	
+	function drawScore(content){
+		var img = document.getElementById("score1");
+		content.beginPath();
+		content.drawImage(img, score_position_x  * tile_width , score_position_y * tile_height , tile_width, tile_height);
+		//content.drawImage(img, 100, 100 , 200, 200);
+		content.stroke();
+	
+	}
+	
+	//=====================================================================
+	
+	
+	function generateNewScorePlace() {
+	
+		var max_x_value = grid_x;
+		var min_x_value = 0;
+		
+		var max_y_value = grid_y;
+		var min_y_value = 0;
+		
+		score_position_x = Math.floor(Math.random() * max_x_value + min_x_value);
+		score_position_y  = Math.floor(Math.random() * max_y_value + min_y_value);	
+	
+	}
+	
+</script>
+
+<html>
+<title> html5 -> game 1 </title>
+<body onload="screen()" bgcolor="chocolate">
+<img src="grass1.jpg" id="grass1" /> 
+<img src="player1.jpg" id="player1" />
+<img src="score1.jpg" id="score1" />
+	
+<h1> html5 -> game 1 -> Scores : <p id="score_field" ></p> </h1>
+<br /> <div align="center"><canvas id="myCanvas" width="800" height="600" ></canvas></div>
+</body>
+</html>
