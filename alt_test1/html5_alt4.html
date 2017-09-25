@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+
+<!-- 
+
+ https://en.wikipedia.org/wiki/Isometric_projection
+
+ https://en.wikipedia.org/wiki/2.5D
+
+ like this, not sure at the moment, just testing
+
+-->
+
+
+<!-- css styles here -->
+<style type="text/css">
+	#mycanvasscreen {
+		background-color: silver;
+	}
+</style>
+
+<!-- javascript here  -->
+<script type="text/javascript">
+	function drawScreen() {
+
+		//var canvas = document.getElementById("mycanvasscreen").getContex("2D");
+		var canvas = document.getElementById("mycanvasscreen").getContext("2d");
+
+        //draw Isometric projection single tile ??????? ( 4 sides)
+		var x = 100, y = 100, xx = 300, yy = 300;
+
+		canvas.beginPath();
+		canvas.moveTo(x, y);
+		canvas.lineTo( x + xx, y);
+		canvas.strokeStyle = '#0000ff';
+		canvas.lineWidth = 4;
+		canvas.stroke();
+		
+		canvas.beginPath();
+		canvas.moveTo(x + xx, y);
+		canvas.lineTo( x + xx, y + yy);
+		canvas.strokeStyle = '#0000ff';
+		canvas.lineWidth = 4;
+		canvas.stroke();
+
+		canvas.beginPath();
+		canvas.moveTo(x + xx, y + yy);
+		canvas.lineTo( x , y + yy);
+		canvas.strokeStyle = '#0000ff';
+		canvas.lineWidth = 4;
+		canvas.stroke();
+
+		canvas.beginPath();
+		canvas.moveTo( x , y + yy);
+		canvas.lineTo( x , y );
+		canvas.strokeStyle = '#0000ff';
+		canvas.lineWidth = 4;
+		canvas.stroke();
+
+	}
+
+</script>
+<!-- html5 here -->
+<html>
+<title> 2.5D graphics test 1 on html5 canvas </title>
+
+<body onload="drawScreen()">
+	<h1> 2.5D graphics test 1 on html5 canvas "isometric projection" </h1>
+	<br /><br />
+	<div align="center">
+		<canvas id="mycanvasscreen" width="640" height="480"></canvas>
+	</div>
+</body>
+
+</html>
