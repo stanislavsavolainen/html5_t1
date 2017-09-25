@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+
+<!-- 
+
+ https://en.wikipedia.org/wiki/Isometric_projection
+
+ https://en.wikipedia.org/wiki/2.5D
+
+ like this, not sure at the moment, just testing
+
+-->
+
+
+<!-- css styles here -->
+<style type="text/css">
+	#mycanvasscreen {
+		background-color: silver;
+	}
+</style>
+
+<!-- javascript here  -->
+<script type="text/javascript">
+
+    function drawScreen() {
+
+        var canvas = document.getElementById("mycanvasscreen").getContext("2d");
+
+       // drawTile(canvas , 3 , 2);
+       drawField(canvas);
+    }
+
+
+    function drawField(canvas){
+
+        var field_width = 10;
+        var field_height = 5;
+
+        for(var j = 0; j < field_height; j++){
+            for(var i = 0; i < field_width; i++){
+                drawTile(canvas, i, j);
+            }
+        }
+    }
+
+
+	function drawTile( canvas, x, y ) {
+
+		//var canvas = document.getElementById("mycanvasscreen").getContex("2D");
+		
+
+        //draw Isometric projection single tile ??????? ( 4 sides)
+	
+
+       // var start_x = 300, start_y = 200;
+
+        var tile_width = 32; //works, but lines lenght
+        var tile_height = 32; //works, but lines lenght
+
+        var start_x = (640 - 50) - ( tile_width * x * 1.7 ); 
+        var start_y = ( 480 - 10) - (tile_height * y );
+
+        var rotation_angle = -30;
+        var new_x = Math.cos( (Math.PI * rotation_angle) / 180 ) * tile_width;
+        var new_y = Math.sin( (Math.PI * rotation_angle) / 180 ) * tile_height;
+
+        var rotation_angle2 = -150;
+        var new_xx = Math.cos( (Math.PI * rotation_angle2) / 180 ) * tile_width;
+        var new_yy = Math.sin( (Math.PI * rotation_angle2) / 180 ) * tile_height;
+
+        var rotation_angle3 = -90;
+        var new_xxx = Math.cos( (Math.PI * rotation_angle3) / 180 ) * tile_width;
+        var new_yyy = Math.sin( (Math.PI * rotation_angle3) / 180 ) * tile_height;
+
+		canvas.beginPath();
+        canvas.moveTo( start_x , start_y);
+		canvas.lineTo( start_x + new_x , start_y + new_y);
+		canvas.strokeStyle = '#0000ff';
+		canvas.lineWidth = 4;
+		canvas.stroke();
+
+        canvas.beginPath();
+		canvas.moveTo(start_x, start_y);
+		canvas.lineTo( start_x + new_xx , start_y + new_yy);
+		canvas.strokeStyle = '#0000ff';
+		canvas.lineWidth = 4;
+		canvas.stroke();
+        
+       // canvas.beginPath();
+		canvas.moveTo(start_x + new_xx, start_y + new_yy);
+		canvas.lineTo( start_x + new_xxx , start_y + new_yyy );
+		canvas.strokeStyle = '#0000ff';
+		canvas.lineWidth = 4;
+		canvas.stroke();
+
+        canvas.beginPath();
+		canvas.moveTo(start_x + new_x, start_y + new_y);
+		canvas.lineTo( start_x + new_xxx, start_y + new_yyy );
+		canvas.strokeStyle = '#0000ff';
+		canvas.lineWidth = 4;
+        canvas.stroke();
+        
+		
+	}
+
+</script>
+<!-- html5 here -->
+<html>
+<title> 2.5D graphics test 1 on html5 canvas </title>
+
+<body onload="drawScreen()">
+	<h1> 2.5D graphics test 1 on html5 canvas "isometric projection" </h1>
+	<br /><br />
+	<div align="center">
+		<canvas id="mycanvasscreen" width="640" height="480"></canvas>
+	</div>
+</body>
+
+</html>

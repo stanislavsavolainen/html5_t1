@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+
+<!-- 
+
+ https://en.wikipedia.org/wiki/Isometric_projection
+
+ https://en.wikipedia.org/wiki/2.5D
+
+ like this, not sure at the moment, just testing
+
+  REQUIRE FIX NEARLY WORKS !
+
+-->
+
+
+
+
+<!-- css styles here -->
+<style type="text/css">
+	#mycanvasscreen {
+		background-color: silver;
+	}
+</style>
+
+<!-- javascript here  -->
+<script type="text/javascript">
+	function drawScreen() {
+
+		//var canvas = document.getElementById("mycanvasscreen").getContex("2D");
+		var canvas = document.getElementById("mycanvasscreen").getContext("2d");
+
+        //draw Isometric projection single tile ??????? ( 4 sides)
+		var x = 100, y = 100, xx = 300, yy = 300;
+
+       // drawField(canvas);
+        drawTile(canvas, 0,0 );
+       drawTile(canvas, 0,1 );
+        drawTile(canvas, 1,0 );
+	}
+
+
+    function drawField(canvas){
+        for(var j = 0; j < 4; j++ ){
+            for(var i = 0; i < 4; i++){
+                drawTile(canvas, j, i)
+            }
+        }
+    }
+
+    function drawTile( canvas , x, y ){
+
+
+        var tile_pos_xx = x;
+        var tile_pos_yy = y;
+
+        var tile_width = 50; //works, but lines lenght
+        var tile_height = 50; //works, but lines lenght
+
+
+        var old_x = (640 / 2) - (tile_pos_xx * tile_width); 
+        var old_y = (480 / 2);
+        var old_yy = 480 - 10 - (tile_pos_yy * tile_height);
+
+       
+
+        var tile_pos_x = 1; //dont change, not works
+        var tile_pos_y = 1; //dont change not works
+
+        var rotation_angle = -30;
+        //Math.PI;
+
+        var new_x = Math.cos( (Math.PI * rotation_angle) / 180 ) * tile_width;
+        var new_y = Math.sin( (Math.PI * rotation_angle) / 180 ) * tile_height;
+        
+        canvas.beginPath();
+        canvas.moveTo( old_x , old_yy );
+		canvas.lineTo( old_x + new_x, old_yy + new_y );
+        canvas.strokeStyle = '#ff0000';
+		canvas.lineWidth = 4;
+		canvas.stroke();
+
+        canvas.beginPath();
+        canvas.moveTo( old_x - tile_width , old_yy - tile_height );
+     //  canvas.moveTo( old_x + new_x  , old_yy + new_y  );
+		canvas.lineTo( old_x - tile_width + new_x, old_yy - tile_height + new_y );
+   // canvas.lineTo( old_x - new_x, old_yy - new_y );
+        canvas.strokeStyle = '#ff0000';
+		canvas.lineWidth = 4;
+		canvas.stroke();
+
+        //========================
+
+        var rotation_angle2 = -150;
+
+        var new_xx = Math.cos( (Math.PI * rotation_angle2) / 180 ) * tile_width;
+        var new_yy = Math.sin( (Math.PI * rotation_angle2) / 180 ) * tile_height;
+
+
+        canvas.beginPath();
+		canvas.moveTo(  old_x , old_yy );
+       //  canvas.moveTo( old_x - tile_width , old_yy - tile_height );
+		//canvas.lineTo(  old_x + new_xx,  old_yy + new_yy );
+       // canvas.lineTo( x + xx, y + yy );
+       canvas.lineTo( old_x - tile_width , old_yy - tile_height );
+		canvas.strokeStyle = '#00ff00';
+		canvas.lineWidth = 4;
+		canvas.stroke();
+        
+
+        canvas.beginPath();
+		//canvas.moveTo(  old_x + tile_width  , old_yy - (tile_height)  );
+         canvas.moveTo( old_x + new_x  , old_yy + new_y  );
+		//canvas.lineTo( old_x  + tile_width + new_xx, (  old_yy - tile_height  ) + new_yy );
+       // canvas.lineTo(  old_x + new_xx,  old_yy + new_yy );
+       	canvas.lineTo( old_x - tile_width + new_x, old_yy - tile_height + new_y );
+        canvas.strokeStyle = '#00ff00';
+		canvas.lineWidth = 4;
+		canvas.stroke();
+
+        
+        /*
+        canvas.beginPath();
+		canvas.moveTo( old_x , old_yy );
+		canvas.lineTo( old_x + new_x, old_yy + new_y );
+       // canvas.lineTo( x + xx, y + yy );
+		canvas.strokeStyle = '#ff0000';
+		canvas.lineWidth = 4;
+		canvas.stroke();
+
+        canvas.beginPath();
+		canvas.moveTo( old_x - tile_width , old_yy -  tile_height );
+		canvas.lineTo( old_x -  tile_width + new_x , old_yy -  tile_height + new_y );
+       // canvas.lineTo( x + xx, y + yy );
+		canvas.strokeStyle = '#ff0000';
+		canvas.lineWidth = 4;
+		canvas.stroke();
+
+        //-------------------------------
+        var rotation_angle2 = -150;
+
+        var new_xx = Math.cos( (Math.PI * rotation_angle2) / 180 ) * (old_x / 2);
+        var new_yy = Math.sin( (Math.PI * rotation_angle2) / 180 ) * (old_yy / 2);
+   
+        canvas.beginPath();
+		canvas.moveTo(  old_x , old_yy );
+		canvas.lineTo(  old_x + new_xx,  old_yy + new_yy );
+       // canvas.lineTo( x + xx, y + yy );
+		canvas.strokeStyle = '#00ff00';
+		canvas.lineWidth = 4;
+		canvas.stroke();
+
+        canvas.beginPath();
+		canvas.moveTo(  old_x + tile_width  , old_yy - (tile_height)  );
+		canvas.lineTo( old_x  + tile_width + new_xx, (  old_yy - tile_height  ) + new_yy );
+       // canvas.lineTo( x + xx, y + yy );
+		canvas.strokeStyle = '#00ff00';
+		canvas.lineWidth = 4;
+		canvas.stroke();
+        */
+    }
+
+
+</script>
+<!-- html5 here -->
+<html>
+<title> 2.5D graphics test 1 on html5 canvas </title>
+
+<body onload="drawScreen()">
+	<h1> 2.5D graphics test 1 on html5 canvas "isometric projection" </h1>
+	<br /><br />
+	<div align="center">
+		<canvas id="mycanvasscreen" width="640" height="480"></canvas>
+	</div>
+</body>
+
+</html>
