@@ -1,0 +1,134 @@
+<!-- http://www.youtube.com/watch?v=hUCT4b4wa-8 -->
+
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+canvas{border:#666 1px solid;}
+</style>
+<script>
+	
+	var value_array = []; 
+	var value_array2 = [];
+	var value_array3 = [];
+       
+	var angle = 0;
+	
+function draw(x,y){
+    var canvas = document.getElementById('canvas');
+    var ctx = canvas.getContext('2d');
+    ctx.save();
+    ctx.clearRect(0,0,1000,400);
+    //ctx.fillStyle = "rgba(0,200,0,1)";
+    //ctx.fillRect (x, y, 50, 50);
+	//ctx.font = "16px;
+	
+		
+	
+	
+	var xx, yy, yyy, yyyy;
+	var amplitude = 100;
+	  
+	
+	 yy = amplitude * Math.sin( (Math.PI * angle) / 180) + 50;
+	 value_array.push( { input_x : x, input_y : yy  } );
+	
+	 yyy = amplitude * Math.sin( (Math.PI * (angle + 120 )  ) / 180 ) + 50;
+	 value_array2.push( { input_x : x, input_y : yyy  } );
+	 
+	 yyyy = amplitude * Math.sin( (Math.PI * (angle + 240 )  ) / 180 ) + 50;
+	 value_array3.push( { input_x : x, input_y : yyyy  } );
+	
+	
+	//draw vertical lines
+	for( var ii = 0 ; ii < 7; ii++ ){
+	
+		ctx.beginPath();
+		ctx.moveTo(170 * ii, 0);
+		ctx.lineTo( 170 * ii, 400);
+		ctx.strokeStyle = '#ff00ff';
+		ctx.lineWidth = 4;
+		ctx.stroke();
+	
+		ctx.fillText( "" +90 * ii , 175 * ii - 20 , 350 - 20); 
+		
+		ctx.fillText( " Phase " + (ii ) , 175 * ii - 80 , 25); 
+	  
+	}
+	
+	//draw horizontal lines
+	
+	for( var ii = 0 ; ii < 8; ii++ ){
+	
+		ctx.beginPath();
+		ctx.moveTo(0 , ii * 50);
+		ctx.lineTo( 1000 , ii * 50);
+		ctx.strokeStyle = '#ff00ff';
+		ctx.lineWidth = 4;
+		ctx.stroke();
+	
+		ctx.fillText( "" + ( ii ) , 20 , ii  * 50 - 30); 
+	
+	}
+	
+	
+	
+	
+	value_array.forEach( function ( element ) { 
+	
+		ctx.beginPath();
+		ctx.strokeStyle = '#ff0000';
+		ctx.moveTo( element.input_x  , element.input_y + 100 );
+		ctx.lineTo( element.input_x  , element.input_y + 120 );
+		ctx.stroke();	
+	} );
+	
+	value_array2.forEach( function ( element ) { 
+	
+		ctx.beginPath();
+		ctx.strokeStyle = '#000000';
+		ctx.moveTo( element.input_x , element.input_y + 100 );
+		ctx.lineTo( element.input_x , element.input_y + 120 );
+		ctx.stroke();	
+	} );
+	
+		value_array3.forEach( function ( element ) { 
+	
+		ctx.beginPath();
+		ctx.strokeStyle = '#0000ff';
+		ctx.moveTo( element.input_x , element.input_y + 100 );
+		ctx.lineTo( element.input_x , element.input_y + 120 );
+		ctx.stroke();	
+	} );
+	
+	
+	angle += 1;
+	if(angle > 360) angle = 0;
+	
+	/*
+	ctx.beginPath();
+		ctx.moveTo( 100, 100 );
+		ctx.lineTo( 120, 150 );
+		ctx.stroke();
+	*/
+    x += 1;
+	
+	//push new value to array
+	
+    var loopTimer = setTimeout('draw('+x+','+y+')', 5);
+}
+</script>
+</head>
+<body onload="draw(0,0)">
+<!--<button onclick="draw(0,0)">Draw</button> -->
+
+<div style="background-color: #999966;"> Visualising 3phase sin-waves like 
+in Wikipedia picture : <a href="https://en.wikipedia.org/wiki/Three-phase_electric_power"> Three-phase_electric_power </a> </div>
+
+<br />< br />
+<canvas id="canvas" width="1000" height="400"></canvas>
+</body>  
+</html>
